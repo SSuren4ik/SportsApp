@@ -1,4 +1,4 @@
-package com.example.sportsapp
+package com.example.mysportsapp
 
 import org.junit.Test
 

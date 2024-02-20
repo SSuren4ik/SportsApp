@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">SportsApp</string>
+    <string name="title_home">Home</string>
+    <string name="title_exercises">Exercises</string>
+    <string name="exercises_fragment_text">EXERCISES</string>
+    <string name="title_calendar">Calendar</string>
+    <string name="title_map">Map</string>
+    <string name="chest_button_text">Chest</string>
 </resources>
