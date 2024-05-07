@@ -6,4 +6,8 @@
     <string name="title_calendar">Calendar</string>
     <string name="title_map">Map</string>
     <string name="chest_button_text">Chest</string>
+    <string name="title_training">Training</string>
+    <string name="stopwatch_start_time">00:00:00</string>
+    <string name="current_results">Текущие результаты:</string>
+    <string name="start_training">Начать тренировку</string>
 </resources>
