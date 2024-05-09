@@ -7,18 +7,6 @@
     android:background="#FFFFFF"
     tools:context=".ui.TrainingFragment">
 
-    <!--    <TextView-->
-    <!--        android:id="@+id/timeTextView"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="@dimen/layout_margin_top"-->
-    <!--        android:text="@string/stopwatch_start_time"-->
-    <!--        android:textColor="#000080"-->
-    <!--        android:textSize="52sp"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
-
     <Chronometer
         android:id="@+id/chronometerView"
         android:layout_width="wrap_content"

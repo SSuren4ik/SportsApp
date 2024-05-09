@@ -1,11 +1,13 @@
 package com.example.mysportsapp
 
+import android.os.Bundle
 import android.os.SystemClock
 
 class Stopwatch(
-    var startTime: Long = 0L,
-    var pauseTime: Long = 0L,
-    var running: Boolean = false) {
+    private var startTime: Long = 0L,
+    private var pauseTime: Long = 0L,
+    private var running: Boolean = false,
+) {
 
     fun start() {
         if (!running) {
@@ -14,18 +16,33 @@ class Stopwatch(
         }
     }
 
-    fun stop() {
+    fun pause() {
         if (running) {
             pauseTime = SystemClock.elapsedRealtime() - startTime
             running = false
         }
     }
+    fun saveState(state: Bundle) {
+        state.putLong("startTime", startTime)
+        state.putLong("pauseTime", pauseTime)
+        state.putBoolean("running", running)
+    }
 
-    fun getElapsedTime(): Long {
-        return if (running) {
-            SystemClock.elapsedRealtime() - startTime
-        } else {
-            pauseTime
-        }
+    fun isRunning(): Boolean {
+        return running
+    }
+
+    fun reset() {
+        startTime = 0L
+        pauseTime = 0L
+        running = false
+    }
+
+    fun getStartTime(): Long {
+        return startTime
+    }
+
+    fun getPauseTime(): Long {
+        return pauseTime
     }
 }

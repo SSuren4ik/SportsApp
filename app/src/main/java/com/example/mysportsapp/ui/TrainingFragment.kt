@@ -7,69 +7,95 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.mysportsapp.R
+import com.example.mysportsapp.Stopwatch
 import com.example.mysportsapp.databinding.FragmentTrainingBinding
 
 class TrainingFragment : Fragment() {
 
+    private var imageResource: Int = 0
     private lateinit var binding: FragmentTrainingBinding
-    private var startTime = 0L
-    private var pauseTime = 0L
-    private var running = false
+    private lateinit var stopwatch: Stopwatch
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (savedInstanceState != null) {
-            startTime = savedInstanceState.getLong("startTime")
-            pauseTime = savedInstanceState.getLong("pauseTime")
-            running = savedInstanceState.getBoolean("running")
+            val startTime = savedInstanceState.getLong("startTime")
+            val pauseTime = savedInstanceState.getLong("pauseTime")
+            val running = savedInstanceState.getBoolean("running")
+            stopwatch = Stopwatch(startTime, pauseTime, running)
+
+            imageResource = savedInstanceState.getInt("imageResource")
+        } else {
+            stopwatch = Stopwatch(0L, 0L, false)
+            imageResource = R.drawable.start_training
         }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         binding = FragmentTrainingBinding.inflate(inflater)
-        if (running) {
-            val elapsedTime = SystemClock.elapsedRealtime() - startTime
-            binding.chronometerView.base = SystemClock.elapsedRealtime() - elapsedTime + pauseTime
-            binding.chronometerView.start()
-        }
+        updateChronometerBaseTime()
+        updateStartPauseImage()
         return binding.root
     }
 
     override fun onStart() {
         super.onStart()
         binding.startPauseImageView.setOnClickListener {
-            if (!running) {
-                startTime = SystemClock.elapsedRealtime()
-                binding.chronometerView.base = SystemClock.elapsedRealtime() - pauseTime
-                binding.chronometerView.start()
-                running = true
-                binding.startPauseImageView.setImageResource(R.drawable.pause_training)
+            if (!stopwatch.isRunning()) {
+                startChronometer()
             } else {
-                binding.chronometerView.stop()
-                pauseTime = SystemClock.elapsedRealtime() - binding.chronometerView.base
-                running = false
-                binding.startPauseImageView.setImageResource(R.drawable.start_training)
+                pauseChronometer()
             }
         }
 
         binding.resetImageView.setOnClickListener {
-            startTime = 0;
-            pauseTime = 0;
-            running = false;
-            binding.chronometerView.stop();
-            binding.chronometerView.base = SystemClock.elapsedRealtime();
-            binding.startPauseImageView.setImageResource(R.drawable.start_training)
+            resetChronometer()
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putLong("startTime", startTime)
-        outState.putLong("pauseTime", pauseTime)
-        outState.putBoolean("running", running)
+        stopwatch.saveState(outState)
+        outState.putInt("imageResource", imageResource)
+    }
+
+    private fun startChronometer() {
+        stopwatch.start()
+        binding.chronometerView.base = SystemClock.elapsedRealtime() - stopwatch.getPauseTime()
+        binding.chronometerView.start()
+        imageResource = R.drawable.pause_training
+        updateStartPauseImage()
+    }
+
+    private fun pauseChronometer() {
+        binding.chronometerView.stop()
+        stopwatch.pause()
+        imageResource = R.drawable.start_training
+        updateStartPauseImage()
+    }
+
+    private fun resetChronometer() {
+        stopwatch.reset()
+        binding.chronometerView.stop()
+        updateChronometerBaseTime()
+        imageResource = R.drawable.start_training
+        updateStartPauseImage()
+    }
+
+    private fun updateChronometerBaseTime() {
+        if (stopwatch.isRunning()) {
+            binding.chronometerView.base = stopwatch.getStartTime() + stopwatch.getPauseTime()
+            binding.chronometerView.start()
+        } else {
+            binding.chronometerView.base = SystemClock.elapsedRealtime() - stopwatch.getPauseTime()
+        }
+    }
+
+    private fun updateStartPauseImage() {
+        binding.startPauseImageView.setImageResource(imageResource)
     }
 
     companion object {
