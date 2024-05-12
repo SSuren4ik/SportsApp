@@ -1,4 +1,4 @@
-package com.example.mysportsapp
+package com.example.mysportsapp.training
 
 class Training(
     private var name: String = "",

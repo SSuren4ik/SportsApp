@@ -1,4 +1,4 @@
-package com.example.mysportsapp
+package com.example.mysportsapp.training
 
 import android.os.Bundle
 import android.os.SystemClock
@@ -13,13 +13,6 @@ class Stopwatch(
         if (!running) {
             startTime = SystemClock.elapsedRealtime() - pauseTime
             running = true
-        }
-    }
-
-    fun pause() {
-        if (running) {
-            pauseTime = SystemClock.elapsedRealtime() - startTime
-            running = false
         }
     }
     fun saveState(state: Bundle) {

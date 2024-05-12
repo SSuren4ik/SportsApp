@@ -10,4 +10,9 @@
     <string name="stopwatch_start_time">00:00:00</string>
     <string name="current_results">Текущие результаты:</string>
     <string name="start_training">Начать тренировку</string>
+    <string name="home_button_text">Перейти к тренировке</string>
+    <string name="add_exercise">Добавить упражнение</string>
+    <string name="timer_title_text">Таймер</string>
+    <string name="timer_text">00:00</string>
+    <string name="start_timer_button_text">Запустить</string>
 </resources>

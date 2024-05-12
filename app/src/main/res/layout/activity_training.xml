@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TrainingActivity">
+
+    <Chronometer
+        android:id="@+id/chronometerView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin_top"
+        android:text="@string/stopwatch_start_time"
+        android:textColor="#000080"
+        android:textSize="52sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/currentResultsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin_top"
+        android:text="@string/current_results"
+        android:textColor="#000080"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chronometerView" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/resultsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/layout_margin_start"
+        android:layout_marginTop="@dimen/layout_margin_top"
+        android:layout_marginEnd="@dimen/layout_margin_end"
+        android:layout_marginBottom="@dimen/layout_margin_bottom"
+        app:layout_constraintBottom_toTopOf="@+id/addExerciseButton"
+        app:layout_constraintTop_toBottomOf="@+id/currentResultsTextView" />
+
+    <Button
+        android:id="@+id/addExerciseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/layout_margin_bottom"
+        android:text="@string/add_exercise"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/timerTitleTextView"/>
+
+    <TextView
+        android:id="@+id/timerTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/layout_margin_start"
+        android:layout_marginBottom="20dp"
+        android:text="@string/timer_title_text"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@id/startTrainingButton"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/timerFrameLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/timerTitleTextView"
+        app:layout_constraintStart_toEndOf="@id/timerTitleTextView"
+        android:layout_marginStart="@dimen/layout_margin_start"
+        app:layout_constraintTop_toTopOf="@id/timerTitleTextView">
+
+        <TextView
+            android:id="@+id/timerText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/timer_text"
+            android:textSize="25sp" />
+
+        <NumberPicker
+            android:id="@+id/numberPicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:theme="@style/NumberPickerStyle" />
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/startTimerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|center_vertical"
+        android:text="@string/start_timer_button_text"
+        app:layout_constraintBottom_toBottomOf="@id/timerTitleTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/timerTitleTextView" />
+
+    <Button
+        android:id="@+id/startTrainingButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:text="@string/start_training"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
