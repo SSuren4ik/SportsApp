@@ -1,23 +1,22 @@
 package com.example.mysportsapp
 
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
 import android.os.VibrationEffect
-import android.os.VibratorManager
-import android.view.View
+import android.os.Vibrator
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mysportsapp.databinding.ActivityTrainingBinding
 import com.example.mysportsapp.training.Stopwatch
 import com.example.mysportsapp.training.TimerSpace.Timer
 import com.example.mysportsapp.training.TimerSpace.TimerTime
+import com.example.mysportsapp.training.TimerSpace.TimerTimePicker
 
 
 class TrainingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTrainingBinding
     private lateinit var stopwatch: Stopwatch
-    private lateinit var timer: Timer
+    private var timer = Timer()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTrainingBinding.inflate(layoutInflater)
@@ -52,7 +51,7 @@ class TrainingActivity : AppCompatActivity() {
         with(binding) {
             chronometerView.base = SystemClock.elapsedRealtime() - stopwatch.getPauseTime()
             chronometerView.start()
-            startTimerButton.text = "Завершить тренировку"
+            startTrainingButton.text = "Завершить тренировку"
         }
     }
 
@@ -61,7 +60,7 @@ class TrainingActivity : AppCompatActivity() {
         updateChronometerBaseTime()
         with(binding) {
             chronometerView.stop()
-            startTimerButton.text = "Начать тренировку"
+            startTrainingButton.text = "Начать тренировку"
         }
     }
 
@@ -77,62 +76,52 @@ class TrainingActivity : AppCompatActivity() {
     }
 
     private fun createTimer() {
-        with(binding) {
-            timerText.visibility = View.GONE
-            numberPicker.minValue = 0
-            numberPicker.maxValue = 1
-            numberPicker.displayedValues = arrayOf("0:05", "1:00")
-            startTimerButton.setOnClickListener {
-                val time = when (binding.numberPicker.value) {
-                    0 -> 5 // 30 секунд
-                    1 -> 60 // 1 минута
-                    else -> 0
-                }
-                startTimer(time.toLong())
+        binding.startTimerButton.setOnClickListener {
+            if (timer.getRunning()) {
+                restartTimer()
+            } else {
+                val timePickerDialog = TimerTimePicker(
+                    this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, { _, minutes, seconds ->
+                        val time = minutes * 60 + seconds
+                        startTimer(time.toLong())
+                    }, 0, 0
+                )
+                timePickerDialog.show()
             }
         }
     }
-
-
     private fun startTimer(time: Long) {
-        with(binding) {
-            timerText.visibility = View.VISIBLE
-            numberPicker.visibility = View.GONE
-            startTimerButton.text = "Отменить таймер"
-        }
+        binding.startTimerButton.text = "Отменить таймер"
         timer = Timer(time)
         timer.startTimer({ timerTime -> onTickAction(timerTime) }, {
             onFinishAction()
         })
     }
-
     private fun onTickAction(timerTime: TimerTime) {
         val minutes = timerTime.getMinutes()
         val seconds = timerTime.getSeconds()
         val stringTime = String.format("%02d:%02d", minutes, seconds)
         binding.timerText.text = stringTime
     }
-
     private fun onFinishAction() {
         restartTimer()
-        val vibratorManager = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-        } else {
-            TODO("VERSION.SDK_INT < S")
-        }
-        val vibrator = vibratorManager.defaultVibrator;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val effect = VibrationEffect.createOneShot(1000, VibrationEffect.DEFAULT_AMPLITUDE)
-            vibrator.vibrate(effect)
-        }
+        createVibrator()
     }
-
     private fun restartTimer() {
         with(binding) {
-            timerText.text = "00:00"
-            numberPicker.visibility = View.VISIBLE
-            timerText.visibility = View.GONE
+            timerText.text = resources.getString(R.string.timer_text)
             startTimerButton.text = "Запустить таймер"
+        }
+    }
+    private fun createVibrator() {
+        val vibrator = getSystemService(Vibrator::class.java)
+        if (vibrator.hasVibrator()) {
+            val vibrationPattern = longArrayOf(0, 500, 50, 300)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createWaveform(vibrationPattern, -1))
+            } else {
+                vibrator.vibrate(vibrationPattern, -1)
+            }
         }
     }
 }

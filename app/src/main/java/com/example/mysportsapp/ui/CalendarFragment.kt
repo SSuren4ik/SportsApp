@@ -31,16 +31,13 @@ class CalendarFragment : Fragment() {
             val trainings = dataBase.getTrainingsByDate(selectedDay)
             if (trainings.isEmpty()) {
                 binding.Name.text = ""
-                binding.Date.text = ""
                 binding.Calories.text = ""
             }
             for (training in trainings) {
                 binding.Name.append(training.getName() + "\n")
-                binding.Date.append(training.getDate() + "\n")
                 binding.Calories.append(training.getCalories().toString() + "\n")
             }
         }
-
     }
 
     companion object {

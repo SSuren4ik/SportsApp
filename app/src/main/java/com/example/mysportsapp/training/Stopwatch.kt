@@ -20,21 +20,17 @@ class Stopwatch(
         state.putLong("pauseTime", pauseTime)
         state.putBoolean("running", running)
     }
-
     fun isRunning(): Boolean {
         return running
     }
-
     fun reset() {
         startTime = 0L
         pauseTime = 0L
         running = false
     }
-
     fun getStartTime(): Long {
         return startTime
     }
-
     fun getPauseTime(): Long {
         return pauseTime
     }

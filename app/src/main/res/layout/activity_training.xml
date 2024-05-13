@@ -43,60 +43,34 @@
 
     <Button
         android:id="@+id/addExerciseButton"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/layout_margin_bottom"
         android:text="@string/add_exercise"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/timerTitleTextView"/>
-
-    <TextView
-        android:id="@+id/timerTitleTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/layout_margin_start"
-        android:layout_marginBottom="20dp"
-        android:text="@string/timer_title_text"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@id/startTrainingButton"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <FrameLayout
-        android:id="@+id/timerFrameLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/timerTitleTextView"
-        app:layout_constraintStart_toEndOf="@id/timerTitleTextView"
-        android:layout_marginStart="@dimen/layout_margin_start"
-        app:layout_constraintTop_toTopOf="@id/timerTitleTextView">
-
-        <TextView
-            android:id="@+id/timerText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/timer_text"
-            android:textSize="25sp" />
-
-        <NumberPicker
-            android:id="@+id/numberPicker"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:theme="@style/NumberPickerStyle" />
-
-    </FrameLayout>
+        app:layout_constraintBottom_toTopOf="@id/startTimerButton"
+        app:layout_constraintEnd_toEndOf="@id/startTrainingButton"
+        app:layout_constraintStart_toStartOf="@id/startTrainingButton" />
 
     <Button
         android:id="@+id/startTimerButton"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="end|center_vertical"
         android:text="@string/start_timer_button_text"
-        app:layout_constraintBottom_toBottomOf="@id/timerTitleTextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/timerTitleTextView" />
+        app:layout_constraintBottom_toTopOf="@id/timerText"
+        app:layout_constraintEnd_toEndOf="@id/startTrainingButton"
+        app:layout_constraintStart_toStartOf="@id/startTrainingButton" />
+
+    <TextView
+        android:id="@+id/timerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/timer_text"
+        android:textSize="25sp"
+        android:layout_marginBottom="@dimen/layout_margin_bottom"
+        app:layout_constraintBottom_toTopOf="@id/startTrainingButton"
+        app:layout_constraintEnd_toEndOf="@id/startTrainingButton"
+        app:layout_constraintStart_toStartOf="@id/startTrainingButton" />
 
     <Button
         android:id="@+id/startTrainingButton"

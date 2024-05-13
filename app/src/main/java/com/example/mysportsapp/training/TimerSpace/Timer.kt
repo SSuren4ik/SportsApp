@@ -1,6 +1,7 @@
 package com.example.mysportsapp.training.TimerSpace
 
 import android.os.CountDownTimer
+import android.util.Log
 
 
 class Timer(private var time: Long = 0L) {
@@ -8,6 +9,7 @@ class Timer(private var time: Long = 0L) {
     private var running = false
 
     fun startTimer(onTickAction: (TimerTime) -> Unit, onFinishAction: () -> Unit) {
+        Log.d("Timer", "startTimer")
         running = true
         timer = object : CountDownTimer(time * 1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
